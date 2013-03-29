@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link href="css/panes.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">	
+            /* Specific pane configuration */
+            .header.row { height: 75px; background: #333; }
+            .body.row { top: 0px; bottom: 0px; background: #4596bf url(images/pozadina.jpg) top no-repeat; padding: 1em; }
+            .footer.row { height: 5.5em; bottom: 0;  }
+            .top.row { height: 50%; }
+            .bottom.row { height: 50%; bottom: 0; background-color: #333 }
+            
+            /* Visual styles */
+            body, .pane { color: White;  background: #4596bf url(images/pozadina.jpg) top no-repeat; font-family: Segoe UI, Helvetica, Arial, Sans-Serif; }
+            .first.pane, .second.pane, .top.row, .bottom.row { }
+			.bottom.row {padding:0}
+            .header, .footer { padding: 0 1em; }
+            button { padding: 0.8em 1.3em; background-color: #ddd; border-radius: 5px; }
+			.menu {height: 5.5em; bottom: 0; padding-left:0;margin:0; text-align:center; display:block }
+			 .menu li {display:inline-block; }
+			
+			.menu li {background-color:#86dde7;padding:1em 1.6em;}
+        </style>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+    </head>
+    <body>
+        <div class="page">
+            <div class="main pane">
+                
+                <div class="body row">
+                    <div class="first pane scroll-y">  
+                    <ul class="menu">
+                    	<li class="meta"><img src="images/meta.png" /></li>
+                        <li class="nota"><img src="images/nota.png" /></li>
+                        <li class="nota"><img src="images/nota.png" /></li>
+                    </ul>
+                        <p>This is the first view.</p>
+                        <button id="sec">Slide the middle pane</button>
+                        <button id="thr">Slide the middle pane</button>
+						
+                    </div>
+                    <div class="second pane scroll-y">
+                        <p>This is the second view</p>
+                        <button>Go back</button>
+                    </div>
+                     <div class="third pane scroll-y">
+                        <p>This is the third view</p>
+                        <button>Go back</button>
+                    </div>
+                </div>
+           
+            </div>
+            <div class="about pane">
+                <div class="top row">
+                    Welcome to the 'about' pane. It's got a top half...
+                </div>
+                <div class="bottom row">
+                    ...and a bottom half.
+                    <button>Go back</button>
+                </div>
+            </div>
+        </div>
+
+        <!--[if lt IE 9]><script src="script/xui-ie-2.2.0.min.js" type="text/javascript"></script><![endif]-->
+        <!--[if !(lt IE 9)]><!--><script src="script/xui-2.2.0.min.js" type="text/javascript"></script><!--<![endif]-->
+        <!--[if !IE]><!--><script src="script/iscroll.js" type="text/javascript"></script><!--<![endif]-->
+        <script src="script/iemobile-fix.js" type="text/javascript"></script>
+        <script src="script/panes.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            (function ($, undefined) {
+                // Initial pane visibility
+                $(".main.pane").showPane();
+                $(".first.pane").showPane();
+
+                // Navigation within middle pane
+                $(".first.pane #sec").clickOrTouch(function () {
+                    $(".second.pane").showPane({ slideFrom: 'right' });
+                });
+				$(".meta").clickOrTouch(function () {
+                    $(".second.pane").showPane({ slideFrom: 'right' });
+                });
+				$(".nota").clickOrTouch(function () {
+                    $(".third.pane").showPane({ slideFrom: 'right' });
+                });
+				 $(".first.pane #thr").clickOrTouch(function () {
+                    $(".third.pane").showPane({ slideFrom: 'right' });
+                });
+                $(".second.pane button").clickOrTouch(function () {
+                    $(".first.pane").showPane({ slideFrom: 'left' });
+                });
+				 $(".third.pane button").clickOrTouch(function () {
+                    $(".first.pane").showPane({ slideFrom: 'left' });
+                });
+
+                // Navigation of whole screen
+                $(".header.row button").clickOrTouch(function () {
+                    $(".about.pane").showPane({ coverFrom: 'bottom' });
+                });
+                $(".about.pane button").clickOrTouch(function () {
+                    $(".main.pane").showPane({ uncoverTo: 'bottom' });
+                });
+            })(xui);
+        </script>
+        <script type="text/javascript">
+(function($) {
+var url = 'http://www.webdizajner.hr/test.json?callback=?';
+
+$.ajax({
+   type: 'GET',
+    url: url,
+    async: false,
+    jsonpCallback: 'jsonCallback',
+    contentType: "application/json",
+    dataType: 'jsonp',
+    success: function(json) {
+       console.dir(json.sites);
+	   $('.second').append(json.sites[1].siteName);
+	  // alert(json.sites[1].siteName);
+    },
+    error: function(e) {
+       console.log(e.message);
+    }
+});
+
+})(jQuery);
+</script>
+    </body>
+</html>
